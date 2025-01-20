@@ -17,6 +17,8 @@ public:
     void read();
     String sendTempToBackend();
     String sendHumidityToBackend();
+    float getTemperature();
+    float getHumidity();
 };
 
 #endif

@@ -63,3 +63,27 @@ String DHTSensor::sendHumidityToBackend()
     String payload = "{\"machine_id\":\"" + String(MACHINE_ID) + "\",\"humidity\":" + String(humidity) + "}";
     return payload;
 }
+
+float DHTSensor::getTemperature()
+{
+    float temperature = dht.readTemperature();
+    if (isnan(temperature))
+    {
+        Serial.println(F("[ERROR] Failed to read from DHT22 sensor"));
+        return -1;
+    }
+
+    return temperature;
+}
+
+float DHTSensor::getHumidity()
+{
+    float humidity = dht.readHumidity();
+    if (isnan(humidity))
+    {
+        Serial.println(F("[ERROR] Failed to read from DHT22 sensor"));
+        return -1;
+    }
+
+    return humidity;
+}

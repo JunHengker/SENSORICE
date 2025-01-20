@@ -10,7 +10,7 @@ public:
     PIRSensor(uint8_t pin, uint8_t buzzerPin);
     void setup();
     void handleMotion();
-    static volatile bool motionDetected;
+    // static volatile bool motionDetected;
 
 private:
     uint8_t _pin;

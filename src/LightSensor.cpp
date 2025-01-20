@@ -47,6 +47,18 @@ String LightSensor::sendToBackend()
     return payload;
 }
 
+float LightSensor::getLightLevel()
+{
+    float lightLevel = bh1750.readLightLevel();
+    if (lightLevel == BH1750_ERROR)
+    {
+        Serial.println(F("[ERROR] Breakout Light Intensity Sensor is not connected"));
+        return -1;
+    }
+
+    return lightLevel;
+}
+
 void LightSensor::powerDown()
 {
     bh1750.powerDown();
