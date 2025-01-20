@@ -10,6 +10,12 @@ void MQTTHandler::setup(MQTT_CALLBACK_SIGNATURE)
     Serial.println(F("[INFO] MQTT setup completed"));
 }
 
+void MQTTHandler::setup()
+{
+    mqttClient.setServer(server, port);
+    Serial.println(F("[INFO] MQTT setup completed"));
+}
+
 void MQTTHandler::ensureConnection()
 {
     if (!mqttClient.connected())

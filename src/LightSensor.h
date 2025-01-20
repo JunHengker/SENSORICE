@@ -19,6 +19,7 @@ public:
     String sendToBackend();
     void powerDown();
     void powerOn();
+    float getLightLevel();
 };
 
 #endif

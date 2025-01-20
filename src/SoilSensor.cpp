@@ -51,3 +51,15 @@ String SoilSensor::sendToBackend()
     // Dry (2200–2500): Low moisture, urgent irrigation needed.
     // Unknown: Values outside the expected range (sensor malfunction or error).
 }
+
+int SoilSensor::getSoilMoisture()
+{
+    int soilMoisture = analogRead(SOIL_SENSOR_PIN);
+    if (isnan(soilMoisture))
+    {
+        Serial.println(F("[ERROR] Soil Moisture Sensor is not connected"));
+        return -1;
+    }
+
+    return soilMoisture;
+}

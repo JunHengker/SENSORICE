@@ -10,6 +10,7 @@ public:
     void setup();
     void read();
     String sendToBackend();
+    int getSoilMoisture();
 };
 
 #endif
