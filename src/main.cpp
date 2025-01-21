@@ -22,11 +22,14 @@ RTC_DATA_ATTR bool firstBoot = true;
 
 void setup()
 {
-  Serial.begin(9600); // kalo deepsleep gagal, comment ini
+  // Serial.begin(9600); // kalo deepsleep gagal, comment ini
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
+
   Serial.println(F("[INFO] Starting Paddy Field Monitoring System..."));
 
   esp_sleep_wakeup_cause_t wakeup_reason = esp_sleep_get_wakeup_cause();
-  if (wakeup_reason == ESP_SLEEP_WAKEUP_EXT0 || wakeup_reason == ESP_SLEEP_WAKEUP_TIMER || wakeup_reason == ESP_SLEEP_WAKEUP_ULP || firstBoot)
+  if (wakeup_reason == ESP_SLEEP_WAKEUP_EXT1 || wakeup_reason == ESP_SLEEP_WAKEUP_TIMER || wakeup_reason == ESP_SLEEP_WAKEUP_ULP || firstBoot)
   {
 
     if (firstBoot || wakeup_reason == ESP_SLEEP_WAKEUP_TIMER || wakeup_reason == ESP_SLEEP_WAKEUP_ULP)
@@ -68,11 +71,14 @@ void setup()
 
       doc["humidity"] = dhtSensor.getHumidity();
       mqttHandler.publishMessage(MQTT_TOPIC_RESPONSE, doc.as<String>());
+
+      delay(5000);
     }
 
-    if (wakeup_reason == ESP_SLEEP_WAKEUP_EXT0)
+    if (wakeup_reason == ESP_SLEEP_WAKEUP_EXT1)
     {
       PIRSensor pirSensor(PIR_PIN, BUZZER_PIN);
+      pirSensor.setup();
       pirSensor.handleMotion();
 
       // Setup WiFi and MQTT
@@ -83,11 +89,12 @@ void setup()
       doc["machine_id"] = MACHINE_ID;
       doc["motion"] = "detected";
       mqttHandler.publishMessage(MQTT_TOPIC_RESPONSE, doc.as<String>());
+      delay(3000);
     }
   }
 
   // close serial before deep sleep
-  Serial.end(); // kalo deepsleep gagal, comment ini
+  // Serial.end(); // kalo deepsleep gagal, comment ini
 
   if (firstBoot)
   {
@@ -95,7 +102,7 @@ void setup()
   }
 
   // set PIR as wakeup source
-  esp_sleep_enable_ext0_wakeup(PIR_PIN, 1);
+  esp_sleep_enable_ext1_wakeup(1ULL << PIR_PIN, ESP_EXT1_WAKEUP_ANY_HIGH);
   rtc_gpio_pullup_dis(PIR_PIN);
   rtc_gpio_pulldown_en(PIR_PIN);
 

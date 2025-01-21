@@ -2,11 +2,13 @@
 
 void LightSensor::setup()
 {
-    while (!bh1750.begin())
-    {
-        Serial.println(F("[ERROR] Breakout Light Intensity Sensor is not detected"));
-        delay(5000);
-    }
+    // while (!bh1750.begin())
+    // {
+    //     Serial.println(F("[ERROR] Breakout Light Intensity Sensor is not detected"));
+    //     delay(5000);
+    // }
+
+    bh1750.begin();
 
     bh1750.setCalibration(1.06);
     bh1750.setSensitivity(1.00);

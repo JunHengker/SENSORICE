@@ -14,6 +14,8 @@ void MQTTHandler::setup()
 {
     mqttClient.setServer(server, port);
     Serial.println(F("[INFO] MQTT setup completed"));
+
+    reconnect();
 }
 
 void MQTTHandler::ensureConnection()
