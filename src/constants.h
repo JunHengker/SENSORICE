@@ -14,7 +14,7 @@
 #define MQTT_TOPIC_COMMAND "/SensoRice/command"
 #define MQTT_TOPIC_RESPONSE "/SensoRice/response"
 
-// Deep sleep constants
-#define TIMESLEEP 15 // amount in seconds the ESP32 sleeps
+// deep sleep define, comment kalo mau disable deep sleep debug
+#define TIMESLEEP_DEBUG
 
 #endif
